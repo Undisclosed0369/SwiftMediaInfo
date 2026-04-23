@@ -157,6 +157,9 @@ uhh idc so idk lol
 GitHub
 https://github.com/Undisclosed0369
 
+Discord
+flabbergastedindividual
+
 ---
 
 # Project Status
