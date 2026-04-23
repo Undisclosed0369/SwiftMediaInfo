@@ -53,25 +53,25 @@ This makes it useful for both **human inspection and automated workflows**.
 ### Easy View
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-1%20EasyView.png" width="900">
+<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-1%20EasyView.png" width="400">
 </p>
 
 ### HTML View
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-2%20HTMLView.png" width="900">
+<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-2%20HTMLView.png" width="400">
 </p>
 
 ### Raw Text View
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-3%20TextView.png" width="900">
+<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-3%20TextView.png" width="400">
 </p>
 
 ### About Window
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-4%20About.png" width="900">
+<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-4%20About.png" width="400">
 </p>
 
 ---
