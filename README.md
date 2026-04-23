@@ -24,7 +24,8 @@ Built entirely with **SwiftUI** for macOS.
 * 📄 **Structured View** – Browse media metadata in an organized tree layout
 * 🌐 **HTML View** – Render MediaInfo output in a styled HTML interface
 * 📝 **Raw Text View** – Inspect the original MediaInfo output directly
-* 🔎 **Zoom In / Zoom Out** – Adjust text size dynamically for easier readability [Zoom-in and Zoom-out using CMD + Plus and CMD + Minus]
+* 🔎 **Zoom In / Zoom Out** – Adjust text size dynamically for easier readability
+  *(Zoom using CMD + Plus and CMD + Minus)*
 * 📤 **Export Function** – Export metadata in multiple formats
 * ⚡ **Fast & Lightweight** – Minimal overhead with a responsive UI
 * 🎨 **Native macOS Interface** – Built using SwiftUI and modern macOS design principles
@@ -49,7 +50,29 @@ This makes it useful for both **human inspection and automated workflows**.
 
 # Screenshots
 
-*(Screenshots coming soon)*
+### Easy View
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-1%20EasyView.png" width="900">
+</p>
+
+### HTML View
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-2%20HTMLView.png" width="900">
+</p>
+
+### Raw Text View
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-3%20TextView.png" width="900">
+</p>
+
+### About Window
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-4%20About.png" width="900">
+</p>
 
 ---
 
@@ -92,6 +115,24 @@ git clone https://github.com/Undisclosed0369/SwiftMediaInfo.git
 3. Move all the files from the **SwiftMediaInfo folder** into your Xcode project
 
 4. Build and run the app
+
+---
+
+# macOS Security Notice
+
+Because SwiftMediaInfo is currently **not code-signed**, macOS Gatekeeper may show a warning such as:
+
+> *“SwiftMediaInfo is damaged and can’t be opened.”*
+
+This does **not mean the app is actually damaged**.
+
+You can fix this quickly by running:
+
+```bash
+xattr -cr SwiftMediaInfo.app
+```
+
+After running the command, open the app again and it should launch normally.
 
 ---
 
