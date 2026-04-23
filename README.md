@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/banner.png" alt="SwiftMediaInfo Banner" width="700">
+  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/poster.png" alt="SwiftMediaInfo Poster" width="700">
 </p>
 
 # SwiftMediaInfo
