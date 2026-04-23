@@ -24,7 +24,7 @@ Built entirely with **SwiftUI** for macOS.
 * 📄 **Structured View** – Browse media metadata in an organized tree layout
 * 🌐 **HTML View** – Render MediaInfo output in a styled HTML interface
 * 📝 **Raw Text View** – Inspect the original MediaInfo output directly
-* 🔎 **Zoom In / Zoom Out** – Adjust text size dynamically for easier readability
+* 🔎 **Zoom In / Zoom Out** – Adjust text size dynamically for easier readability [Zoom-in and Zoom-out using CMD + Plus and CMD + Minus]
 * 📤 **Export Function** – Export metadata in multiple formats
 * ⚡ **Fast & Lightweight** – Minimal overhead with a responsive UI
 * 🎨 **Native macOS Interface** – Built using SwiftUI and modern macOS design principles
