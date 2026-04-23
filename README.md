@@ -38,15 +38,17 @@ Download the latest release from the **Releases** section.
 git clone https://github.com/Undisclosed0369/SwiftMediaInfo.git
 ```
 
-2. Open the project in **Xcode**
+2. Create a project in **Xcode**
 
-3. Build and run the app.
+3. Move all the files from "SwiftMediaInfo" Folder to your Xcode project folder.
+
+4. Build and run the app.
 
 ---
 
 ## Requirements
 
-* macOS
+* macOS 26 (I haven't tested older versions)
 * Xcode (for building from source)
 
 ---
@@ -77,7 +79,7 @@ You might discover something.
 
 ## License
 
-License to be determined.
+uhh idc so idk lol
 
 ---
 
