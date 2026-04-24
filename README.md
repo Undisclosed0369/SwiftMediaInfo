@@ -62,13 +62,13 @@ This makes it useful for both **human inspection and automated workflows**.
 <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-2%20HTMLView.png" width="450">
 </p>
 
-### Raw Text View
+### Text View
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-3%20TextView.png" width="450">
 </p>
 
-### About Window
+### Light Mode
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-4%20About.png" width="450">
