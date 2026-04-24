@@ -21,7 +21,7 @@ Built entirely with **SwiftUI** for macOS.
 
 # Features
 
-* 📄 **Structured View** – Browse media metadata in an organized tree layout
+* 📄 **Easy View** – Browse media metadata in an organized tree layout
 * 🌐 **HTML View** – Render MediaInfo output in a styled HTML interface
 * 📝 **Raw Text View** – Inspect the original MediaInfo output directly
 * 🔎 **Zoom In / Zoom Out** – Adjust text size dynamically for easier readability
@@ -205,6 +205,6 @@ flabbergastedindividual
 
 # Project Status
 
-Version **1.0 Final Release**
+Version **1.1 Final Release**
 
 More improvements may come in future updates.
