@@ -71,7 +71,7 @@ This makes it useful for both **human inspection and automated workflows**.
 ### Light Mode
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-4%20About.png" width="450">
+<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-4%20Light%20Mode.png" width="450">
 </p>
 
 ---
