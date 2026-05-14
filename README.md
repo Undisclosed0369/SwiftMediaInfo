@@ -13,7 +13,7 @@
 
 **SwiftMediaInfo** is a lightweight macOS application for viewing detailed media file information in a clean and modern interface.
 
-It provides multiple ways to inspect media metadata, including structured views, raw output, and an HTML-rendered layout.
+It provides multiple ways to inspect media metadata, including structured views, raw output, HTML-rendered layouts, and side-by-side comparison tools.
 
 Built entirely with **SwiftUI** for macOS.
 
@@ -22,13 +22,31 @@ Built entirely with **SwiftUI** for macOS.
 # Features
 
 * 📄 **Easy View** – Browse media metadata in an organized tree layout
+* 📝 **Text View** – Read media information in a simplified text-focused layout
+* 📝 **Raw Text View** – Inspect the Full MediaInfo output directly
 * 🌐 **HTML View** – Render MediaInfo output in a styled HTML interface
-* 📝 **Raw Text View** – Inspect the original MediaInfo output directly
+* ⚖️ **Compare View** – Compare two media files side-by-side in split screen mode
 * 🔎 **Zoom In / Zoom Out** – Adjust text size dynamically for easier readability
   *(Zoom using CMD + Plus and CMD + Minus)*
+* ⌨️ **Keyboard Shortcuts** – Quickly switch between views and actions using keyboard shortcuts
 * 📤 **Export Function** – Export metadata in multiple formats
+* ⚡ **Lazy Loading Support** – Improved performance while opening large media files
 * ⚡ **Fast & Lightweight** – Minimal overhead with a responsive UI
 * 🎨 **Native macOS Interface** – Built using SwiftUI and modern macOS design principles
+
+---
+
+# Keyboard Shortcuts
+
+| Shortcut | Action |
+| --- | --- |
+| **CMD + 1** | Easy View *(or Add File A in Compare Mode)* |
+| **CMD + 2** | Text View *(or Add File B in Compare Mode)* |
+| **CMD + 3** | Raw Text View |
+| **CMD + 4** | HTML View |
+| **CMD + 5** | XML View |
+| **CMD + 6** | JSON View |
+| **CMD + E** | Export |
 
 ---
 
@@ -53,25 +71,31 @@ This makes it useful for both **human inspection and automated workflows**.
 ### Easy View
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-1%20EasyView.png" width="450">
-</p>
-
-### HTML View
-
-<p align="center">
-<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-2%20HTMLView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC1-EasyView.png" width="450">
 </p>
 
 ### Text View
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-3%20TextView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC2-TextView.png" width="450">
+</p>
+
+### Compare View
+
+<p align="center">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC3-CompareView.png" width="450">
+</p>
+
+### HTML View
+
+<p align="center">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC4-HTMLView.png" width="450">
 </p>
 
 ### Light Mode
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/Screenshot-4%20Light%20Mode.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC5-LightMode.png" width="450">
 </p>
 
 ---
@@ -151,10 +175,14 @@ After running the command, open the app again and it should launch normally.
 | Native Swift Code        | ✅              | ❌                  |
 | Structured Metadata Tree | ✅              | ✅                  |
 | HTML Rendering           | ✅              | ✅                  |
+| Text View                | ✅              | ✅                  |
+| Compare View             | ✅              | ❌                  |
 | Raw Output               | ✅              | ✅                  |
 | Zoom In / Zoom Out       | ✅              | ❌                  |
 | Multiple Export Formats  | ✅              | ✅                  |
+| Keyboard Shortcuts       | ✅              | ❌                  |
 | Lightweight UI           | ✅              | ✅                  |
+| Lazy Loading             | ✅              | ❌                  |
 | Open Source              | ✅              | ✅                  |
 
 SwiftMediaInfo focuses on providing a **modern macOS-native interface** for MediaInfo functionality.
@@ -183,6 +211,8 @@ Try clicking the **app icon repeatedly in the About window**.
 
 You might discover something.
 
+There may also be additional hidden surprises elsewhere.
+
 ---
 
 # License
@@ -205,6 +235,6 @@ flabbergastedindividual
 
 # Project Status
 
-Version **1.1 Final Release**
+Version **1.2 Final Release**
 
 More improvements may come in future updates.
