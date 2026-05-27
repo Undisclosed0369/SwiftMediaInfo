@@ -7,13 +7,14 @@
 ![macOS](https://img.shields.io/badge/macOS-26+-blue)
 ![Swift](https://img.shields.io/badge/Swift-SwiftUI-orange)
 ![Status](https://img.shields.io/badge/status-Stable-success)
+![License](https://img.shields.io/badge/license-MIT-green)
 ![AI Built](https://img.shields.io/badge/Built%20With-AI-purple)
 
 [![Download for macOS](https://img.shields.io/badge/Download-macOS-blue?style=for-the-badge\&logo=apple)](https://github.com/Undisclosed0369/SwiftMediaInfo/releases)
 
 **SwiftMediaInfo** is a lightweight macOS application for viewing detailed media file information in a clean and modern interface.
 
-It provides multiple ways to inspect media metadata, including structured views, raw output, HTML-rendered layouts, and side-by-side comparison tools.
+It provides multiple ways to inspect media metadata, including structured views, raw output, HTML-rendered layouts, side-by-side comparison tools, and advanced export options.
 
 Built entirely with **SwiftUI** for macOS.
 
@@ -26,11 +27,13 @@ Built entirely with **SwiftUI** for macOS.
 * 📝 **Raw Text View** – Inspect the Full MediaInfo output directly
 * 🌐 **HTML View** – Render MediaInfo output in a styled HTML interface
 * ⚖️ **Compare View** – Compare two media files side-by-side in split screen mode
+* 📂 **Open in Default App** – Instantly open media files in their associated applications
 * 🔎 **Zoom In / Zoom Out** – Adjust text size dynamically for easier readability
   *(Zoom using CMD + Plus and CMD + Minus)*
 * ⌨️ **Keyboard Shortcuts** – Quickly switch between views and actions using keyboard shortcuts
-* 📤 **Export Function** – Export metadata in multiple formats
+* 📤 **Export Function** – Export metadata in multiple formats or ZIP bundles
 * ⚡ **Lazy Loading Support** – Improved performance while opening large media files
+* 🧠 **UTF-8 Filename Support** – Improved compatibility with special characters and non-English filenames
 * ⚡ **Fast & Lightweight** – Minimal overhead with a responsive UI
 * 🎨 **Native macOS Interface** – Built using SwiftUI and modern macOS design principles
 
@@ -46,6 +49,8 @@ Built entirely with **SwiftUI** for macOS.
 | **CMD + 4** | HTML View |
 | **CMD + 5** | XML View |
 | **CMD + 6** | JSON View |
+| **SHIFT + CMD + C** | Open Compare Mode |
+| **CMD + Return** | Open File in Default App |
 | **CMD + E** | Export |
 
 ---
@@ -61,6 +66,7 @@ SwiftMediaInfo allows exporting media information into several formats:
 | **JSON** | Structured metadata format           |
 | **XML**  | Machine-readable metadata            |
 | **CSV**  | Spreadsheet-friendly metadata format |
+| **ZIP**  | Export all formats together          |
 
 This makes it useful for both **human inspection and automated workflows**.
 
@@ -110,7 +116,7 @@ You must install it before using the app.
 
 ```bash
 brew install mediainfo
-```
+````
 
 If you do not have **Homebrew**, install it first:
 
@@ -178,6 +184,7 @@ After running the command, open the app again and it should launch normally.
 | Text View                | ✅              | ✅                  |
 | Compare View             | ✅              | ❌                  |
 | Raw Output               | ✅              | ✅                  |
+| Open in Default App      | ✅              | ❌                  |
 | Zoom In / Zoom Out       | ✅              | ❌                  |
 | Multiple Export Formats  | ✅              | ✅                  |
 | Keyboard Shortcuts       | ✅              | ❌                  |
@@ -231,13 +238,11 @@ SwiftMediaInfo is currently **not code-signed**.
 
 [Click here for the fix](https://github.com/Undisclosed0369/SwiftMediaInfo/tree/main#macos-security-notice)
 
-
 ## 2. Why do I need MediaInfo CLI installed?
 
 SwiftMediaInfo is a frontend/interface for the official **MediaInfo CLI** tool.
 
 The app uses the official MediaInfo backend for extracting metadata while providing a modern native macOS interface built with SwiftUI.
-
 
 ## 3. Does SwiftMediaInfo modify my files?
 
@@ -247,23 +252,21 @@ SwiftMediaInfo is a **read-only metadata viewer**.
 
 It does not edit, re-encode, modify, or touch your media files in any way.
 
-
 ## 4. What file formats are supported?
 
 Any format supported by the official MediaInfo CLI tool should work inside SwiftMediaInfo.
 
 This includes common formats such as:
 
-- MKV
-- MP4
-- AVI
-- MOV
-- FLAC
-- MP3
-- WAV
+* MKV
+* MP4
+* AVI
+* MOV
+* FLAC
+* MP3
+* WAV
 
 and many more.
-
 
 ## 5. Why are there multiple view modes?
 
@@ -273,13 +276,11 @@ Some users prefer structured layouts, while others want raw or machine-readable 
 
 This makes the app suitable for both casual inspection and advanced workflows.
 
-
 ## 6. Is SwiftMediaInfo open source?
 
 Yes.
 
 The project is fully open source and available on GitHub.
-
 
 ## 7. Is this an official MediaInfo application?
 
@@ -289,35 +290,31 @@ SwiftMediaInfo is an independent third-party frontend/interface for MediaInfo bu
 
 However, it still uses the **official MediaInfo binary/backend** internally and simply presents the information in a more modern and native macOS interface.
 
-
 ## 8. Why does the app contain easter eggs?
 
 Because software should be fun sometimes.
 
 Also, the easter eggs are probably not even 2 KiB combined.
 
-
 ## 9. I spotted a bug / I have suggestions for new features for the app
 
 You can either:
 
-- Open an issue here:
+* Open an issue here:
   https://github.com/Undisclosed0369/SwiftMediaInfo/issues
 
 or
 
-- Contact me directly on Discord:
+* Contact me directly on Discord:
   `flabbergastedindividual`
 
 Feedback, bug reports, and suggestions are always welcome.
-
 
 ## 10. Why are you doing this?
 
 Honestly, I originally made this for myself.
 
 But whenever I build something useful and have free time, I upload it publicly because there is a good chance somebody else might find it useful too.
-
 
 ## 11. Why can't you package the official MediaInfo binary with the app?
 
@@ -329,7 +326,6 @@ Bundling it directly with SwiftMediaInfo would require me to constantly rebuild 
 
 Using the Homebrew version instead ensures that your MediaInfo installation can stay independently up to date (assuming you regularly update Homebrew).
 
-
 ## 12. Do you take donations?
 
 Technically... no.
@@ -339,7 +335,6 @@ I intentionally avoid traditional payment methods because they reveal personal b
 If you *really* want to support the project, Steam gift cards are probably the easiest option.
 
 Please contact me on Discord first though.
-
 
 ## 13. Did you pay for the AI chatbots used to build this app?
 
@@ -365,6 +360,6 @@ flabbergastedindividual
 
 # Project Status
 
-Version **1.2 Final Release**
+Version **1.3 Final Release**
 
 More improvements may come in future updates.
