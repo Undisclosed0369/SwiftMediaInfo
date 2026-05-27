@@ -223,24 +223,21 @@ uhh idc so idk lol
 
 # FAQ
 
-## Why does the app say it is damaged?
+## 1. Why does the app say it is damaged?
 
 SwiftMediaInfo is currently **not code-signed**.
 
 [Click here for the fix](https://github.com/Undisclosed0369/SwiftMediaInfo/tree/main#macos-security-notice)
 
----
 
-## Why do I need MediaInfo CLI installed?
+## 2. Why do I need MediaInfo CLI installed?
 
 SwiftMediaInfo is a frontend/interface for the official **MediaInfo CLI** tool.
 
 The app uses the official MediaInfo backend for extracting metadata while providing a modern native macOS interface built with SwiftUI.
 
 
----
-
-## Does SwiftMediaInfo modify my files?
+## 3. Does SwiftMediaInfo modify my files?
 
 No.
 
@@ -248,9 +245,8 @@ SwiftMediaInfo is a **read-only metadata viewer**.
 
 It does not edit, re-encode, modify, or touch your media files in any way.
 
----
 
-## What file formats are supported?
+## 4. What file formats are supported?
 
 Any format supported by the official MediaInfo CLI tool should work inside SwiftMediaInfo.
 
@@ -266,9 +262,8 @@ This includes common formats such as:
 
 and many more.
 
----
 
-## Why are there multiple view modes?
+## 5. Why are there multiple view modes?
 
 Different users prefer different workflows.
 
@@ -276,17 +271,15 @@ Some users prefer structured layouts, while others want raw or machine-readable 
 
 This makes the app suitable for both casual inspection and advanced workflows.
 
----
 
-## Is SwiftMediaInfo open source?
+## 6. Is SwiftMediaInfo open source?
 
 Yes.
 
 The project is fully open source and available on GitHub.
 
----
 
-## Is this an official MediaInfo application?
+## 7. Is this an official MediaInfo application?
 
 No.
 
@@ -294,17 +287,15 @@ SwiftMediaInfo is an independent third-party frontend/interface for MediaInfo bu
 
 However, it still uses the **official MediaInfo binary/backend** internally and simply presents the information in a more modern and native macOS interface.
 
----
 
-## Why does the app contain easter eggs?
+## 8. Why does the app contain easter eggs?
 
 Because software should be fun sometimes.
 
 Also, the easter eggs are probably not even 2 KiB combined.
 
----
 
-## I spotted a bug / I have suggestions for new features for the app
+## 9. I spotted a bug / I have suggestions for new features for the app
 
 You can either:
 
@@ -318,17 +309,15 @@ or
 
 Feedback, bug reports, and suggestions are always welcome.
 
----
 
-## Why are you doing this?
+## 10. Why are you doing this?
 
 Honestly, I originally made this for myself.
 
 But whenever I build something useful and have free time, I upload it publicly because there is a good chance somebody else might find it useful too.
 
----
 
-## Why can't you package the official MediaInfo binary with the app?
+## 11. Why can't you package the official MediaInfo binary with the app?
 
 Good question.
 
@@ -338,9 +327,8 @@ Bundling it directly with SwiftMediaInfo would require me to constantly rebuild 
 
 Using the Homebrew version instead ensures that your MediaInfo installation can stay independently up to date (assuming you regularly update Homebrew).
 
----
 
-## Do you take donations?
+## 12. Do you take donations?
 
 Technically... no.
 
@@ -350,9 +338,8 @@ If you *really* want to support the project, Steam gift cards are probably the e
 
 Please contact me on Discord first though.
 
----
 
-## Did you pay for the AI chatbots used to build this app?
+## 13. Did you pay for the AI chatbots used to build this app?
 
 Absolutely not.
 
