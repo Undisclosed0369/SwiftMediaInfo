@@ -217,7 +217,9 @@ There may also be additional hidden surprises elsewhere.
 
 # License
 
-uhh idc so idk lol
+This project is licensed under the MIT License.
+
+See the [LICENSE](LICENSE) file for details.
 
 ---
 
