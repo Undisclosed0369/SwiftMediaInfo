@@ -354,7 +354,7 @@ GitHub
 https://github.com/Undisclosed0369
 
 Discord
-flabbergastedindividual
+`flabbergastedindividual`
 
 ---
 
