@@ -222,14 +222,6 @@ There may also be additional hidden surprises elsewhere.
 
 ---
 
-# License
-
-This project is licensed under the MIT License.
-
-See the [LICENSE](LICENSE) file for details.
-
----
-
 # FAQ
 
 ## 1. Why does the app say it is damaged?
@@ -343,6 +335,14 @@ Absolutely not.
 Only free accounts were used.
 
 That is also probably why updates sometimes take longer than expected.
+
+---
+
+# License
+
+This project is licensed under the MIT License.
+
+See the [LICENSE](LICENSE) file for details.
 
 ---
 
