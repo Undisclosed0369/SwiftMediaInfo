@@ -27,6 +27,9 @@ Built entirely with **SwiftUI** for macOS.
 * 📝 **Raw Text View** – Inspect the Full MediaInfo output directly
 * 🌐 **HTML View** – Render MediaInfo output in a styled HTML interface
 * ⚖️ **Compare View** – Compare two media files side-by-side in split screen mode
+* 🎨 **Native macOS Interface** – Built using SwiftUI and modern macOS design principles
+* 🎨 **Liquid Glass UI** – Modern, sleek, translucent interface designed strictly for macOS
+* 🕒 **Recent Files** – Quickly re-open and access recently inspected media assets
 * 📂 **Open in Default App** – Instantly open media files in their associated applications
 * 🔎 **Zoom In / Zoom Out** – Adjust text size dynamically for easier readability
   *(Zoom using CMD + Plus and CMD + Minus)*
@@ -35,7 +38,7 @@ Built entirely with **SwiftUI** for macOS.
 * ⚡ **Lazy Loading Support** – Improved performance while opening large media files
 * 🧠 **UTF-8 Filename Support** – Improved compatibility with special characters and non-English filenames
 * ⚡ **Fast & Lightweight** – Minimal overhead with a responsive UI
-* 🎨 **Native macOS Interface** – Built using SwiftUI and modern macOS design principles
+
 
 ---
 
@@ -61,12 +64,12 @@ SwiftMediaInfo allows exporting media information into several formats:
 
 | Format   | Description                          |
 | -------- | ------------------------------------ |
-| **TXT**  | Plain text MediaInfo output          |
+| **TXT** | Plain text MediaInfo output          |
 | **HTML** | Styled HTML export                   |
 | **JSON** | Structured metadata format           |
-| **XML**  | Machine-readable metadata            |
-| **CSV**  | Spreadsheet-friendly metadata format |
-| **ZIP**  | Export all formats together          |
+| **XML** | Machine-readable metadata            |
+| **CSV** | Spreadsheet-friendly metadata format |
+| **ZIP** | Export all formats together          |
 
 This makes it useful for both **human inspection and automated workflows**.
 
@@ -77,31 +80,31 @@ This makes it useful for both **human inspection and automated workflows**.
 ### Easy View
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/EasyView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC1_EasyView.png" width="450">
 </p>
 
 ### Text View
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/TextView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC2_TextView.png" width="450">
 </p>
 
 ### Compare View
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/CompareView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC3_CompareView.png" width="450">
 </p>
 
 ### HTML View
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/HTMLView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC4_HTMLView.png" width="450">
 </p>
 
 ### Light Mode
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/LightMode.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC5_LightMode.png" width="450">
 </p>
 
 ---
@@ -116,12 +119,14 @@ You must install it before using the app.
 
 ```bash
 brew install mediainfo
-````
+
+```
 
 If you do not have **Homebrew**, install it first:
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+/bin/bash -c "$(curl -fsSL [https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh](https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh))"
+
 ```
 
 ---
@@ -137,13 +142,12 @@ Download the latest release from the **[Releases](https://github.com/Undisclosed
 1. Clone the repository
 
 ```bash
-git clone https://github.com/Undisclosed0369/SwiftMediaInfo.git
+git clone [https://github.com/Undisclosed0369/SwiftMediaInfo.git](https://github.com/Undisclosed0369/SwiftMediaInfo.git)
+
 ```
 
 2. Create a project in **Xcode**
-
 3. Move all the files from the **SwiftMediaInfo folder** into your Xcode project
-
 4. Build and run the app
 
 ---
@@ -160,6 +164,7 @@ You can fix this quickly by running:
 
 ```bash
 xattr -cr SwiftMediaInfo.app
+
 ```
 
 After running the command, open the app again and it should launch normally.
@@ -175,22 +180,24 @@ After running the command, open the app again and it should launch normally.
 
 # Feature Comparison
 
-| Feature                  | SwiftMediaInfo | Official MediaInfo |
-| ------------------------ | -------------- | ------------------ |
-| Native macOS UI          | ✅              | ❌                  |
-| Native Swift Code        | ✅              | ❌                  |
-| Structured Metadata Tree | ✅              | ✅                  |
-| HTML Rendering           | ✅              | ✅                  |
-| Text View                | ✅              | ✅                  |
-| Compare View             | ✅              | ❌                  |
-| Raw Output               | ✅              | ✅                  |
-| Open in Default App      | ✅              | ❌                  |
-| Zoom In / Zoom Out       | ✅              | ❌                  |
-| Multiple Export Formats  | ✅              | ✅                  |
-| Keyboard Shortcuts       | ✅              | ❌                  |
-| Lightweight UI           | ✅              | ✅                  |
-| Lazy Loading             | ✅              | ❌                  |
-| Open Source              | ✅              | ✅                  |
+| Feature | SwiftMediaInfo | Official MediaInfo |
+| --- | --- | --- |
+| **Native macOS UI** | ✅ | ❌ |
+| **Liquid Glass UI** | ✅ | ❌ |
+| **Native Swift Code** | ✅ | ❌ |
+| **Structured Metadata Tree** | ✅ | ✅ |
+| **HTML Rendering** | ✅ | ✅ |
+| **Text View** | ✅ | ✅ |
+| **Compare View** | ✅ | ❌ |
+| **Recent Files** | ✅ | ❌ |
+| **Open in Default App** | ✅ | ❌ |
+| **Raw Output** | ✅ | ✅ |
+| **Zoom In / Zoom Out** | ✅ | ❌ |
+| **Multiple Export Formats** | ✅ | ✅ |
+| **Keyboard Shortcuts** | ✅ | ❌ |
+| **Lightweight UI** | ✅ | ✅ |
+| **Lazy Loading** | ✅ | ❌ |
+| **Open Source** | ✅ | ✅ |
 
 SwiftMediaInfo focuses on providing a **modern macOS-native interface** for MediaInfo functionality.
 
@@ -217,8 +224,6 @@ Fun fact:
 Try clicking the **app icon repeatedly in the About window**.
 
 You might discover something.
-
-There may also be additional hidden surprises elsewhere.
 
 ---
 
@@ -293,12 +298,12 @@ Also, the easter eggs are probably not even 2 KiB combined.
 You can either:
 
 * Open an issue here:
-  https://github.com/Undisclosed0369/SwiftMediaInfo/issues
+https://github.com/Undisclosed0369/SwiftMediaInfo/issues
 
 or
 
 * Contact me directly on Discord:
-  `flabbergastedindividual`
+`flabbergastedindividual`
 
 Feedback, bug reports, and suggestions are always welcome.
 
@@ -342,7 +347,7 @@ That is also probably why updates sometimes take longer than expected.
 
 This project is licensed under the MIT License.
 
-See the [LICENSE](LICENSE) file for details.
+See the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
 
 ---
 
@@ -360,6 +365,6 @@ Discord
 
 # Project Status
 
-Version **1.3 Final Release**
+Version **1.4 Final Release**
 
 More improvements may come in future updates.
