@@ -6,11 +6,12 @@
 
 ![macOS](https://img.shields.io/badge/macOS-26+-blue)
 ![Swift](https://img.shields.io/badge/Swift-SwiftUI-orange)
+![Homebrew](https://img.shields.io/badge/Homebrew-Available-success)
 ![Status](https://img.shields.io/badge/status-Stable-success)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![AI Built](https://img.shields.io/badge/Built%20With-AI-purple)
 
-[![Download for macOS](https://img.shields.io/badge/Download-macOS-blue?style=for-the-badge\&logo=apple)](https://github.com/Undisclosed0369/SwiftMediaInfo/releases)
+[![Download for macOS](https://img.shields.io/badge/Download-macOS-blue?style=for-the-badge&logo=apple)](https://github.com/Undisclosed0369/SwiftMediaInfo/releases)
 
 **SwiftMediaInfo** is a lightweight macOS application for viewing detailed media file information in a clean and modern interface.
 
@@ -38,7 +39,6 @@ Built entirely with **SwiftUI** for macOS.
 * ⚡ **Lazy Loading Support** – Improved performance while opening large media files
 * 🧠 **UTF-8 Filename Support** – Improved compatibility with special characters and non-English filenames
 * ⚡ **Fast & Lightweight** – Minimal overhead with a responsive UI
-
 
 ---
 
@@ -131,36 +131,65 @@ If you do not have **Homebrew**, install it first:
 
 ---
 
-# Installation
+# Installation & Management
 
-## Option 1 — Download Release
+## Option 1 — Via Homebrew (Recommended)
 
-Download the latest release from the **[Releases](https://github.com/Undisclosed0369/SwiftMediaInfo/releases)** section.
+SwiftMediaInfo is officially available as a Homebrew Cask. You can manage the application lifecycle entirely from your terminal.
 
-## Option 2 — Build from Source
+### Install
 
-1. Clone the repository
+```bash
+brew tap Undisclosed0369/swiftmediainfo
+brew install --cask swiftmediainfo
+
+```
+
+### Update
+
+To update SwiftMediaInfo to the latest stable release:
+
+```bash
+brew update
+brew upgrade --cask swiftmediainfo
+
+```
+
+### Uninstall
+
+If you ever need to completely remove the application and its associated files:
+
+```bash
+brew uninstall swiftmediainfo
+
+```
+
+## Option 2 — Manual Download Release
+
+Download the latest pre-compiled application bundle directly from the **[Releases](https://github.com/Undisclosed0369/SwiftMediaInfo/releases)** section.
+
+## Option 3 — Build from Source
+
+1. Clone the repository:
 
 ```bash
 git clone [https://github.com/Undisclosed0369/SwiftMediaInfo.git](https://github.com/Undisclosed0369/SwiftMediaInfo.git)
 
 ```
 
-2. Create a project in **Xcode**
-3. Move all the files from the **SwiftMediaInfo folder** into your Xcode project
-4. Build and run the app
+2. Create a new macOS project in **Xcode**.
+3. Move all files from the cloned **SwiftMediaInfo folder** into your Xcode project hierarchy.
+4. Build and run the app (`CMD + R`).
 
 ---
 
 # macOS Security Notice
 
-Because SwiftMediaInfo is currently **not code-signed**, macOS Gatekeeper may show a warning such as:
+Because SwiftMediaInfo is currently **not code-signed** (when manually downloading or building from source), macOS Gatekeeper may show a warning such as:
 
 > *“SwiftMediaInfo is damaged and can’t be opened.”*
 
-This does **not mean the app is actually damaged**.
-
-You can fix this quickly by running:
+This does **not mean the app is actually damaged**. You can resolve this issue quickly by clearing the quarantine attributes using your terminal:
 
 ```bash
 xattr -cr SwiftMediaInfo.app
@@ -174,7 +203,7 @@ After running the command, open the app again and it should launch normally.
 # Requirements
 
 * macOS 26 (older versions not tested)
-* Xcode (for building from source)
+* Xcode (only required for building from source)
 
 ---
 
