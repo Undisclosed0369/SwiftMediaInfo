@@ -173,7 +173,7 @@ Download the latest pre-compiled application bundle directly from the **[Release
 1. Clone the repository:
 
 ```bash
-git clone [https://github.com/Undisclosed0369/SwiftMediaInfo.git](https://github.com/Undisclosed0369/SwiftMediaInfo.git)
+git clone https://github.com/Undisclosed0369/SwiftMediaInfo.git
 
 ```
 
