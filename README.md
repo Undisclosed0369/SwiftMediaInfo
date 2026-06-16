@@ -42,6 +42,19 @@ Built entirely with **SwiftUI** for macOS.
 
 ---
 
+## 💡 Your Feedback Matters!
+
+I'm actively improving SwiftMediaInfo and would love your feedback.
+
+If you have an idea for a new feature, workflow improvement, or UI enhancement or just want to talk about your experience with the app, please submit it here:
+
+[Feedback Form](https://forms.gle/ZoDwomdm5asgfj386) (~ 90 seconds avg. depending on answers)
+
+Every submission is read and considered for future releases. Thank you for helping shape SwiftMediaInfo!
+
+
+---
+
 # Keyboard Shortcuts
 
 | Shortcut | Action |
@@ -211,14 +224,13 @@ After running the command, open the app again and it should launch normally.
 
 | Feature | SwiftMediaInfo | Official MediaInfo |
 | --- | --- | --- |
-| **Native macOS UI** | ✅ | ❌ |
+| **Native macOS UI & Swift Code** | ✅ | ❌ |
 | **Liquid Glass UI** | ✅ | ❌ |
-| **Native Swift Code** | ✅ | ❌ |
 | **Structured Metadata Tree** | ✅ | ✅ |
 | **HTML Rendering** | ✅ | ✅ |
 | **Text View** | ✅ | ✅ |
 | **Compare View** | ✅ | ❌ |
-| **Recent Files** | ✅ | ❌ |
+| **Recent Files** | ✅ | ✅ |
 | **Open in Default App** | ✅ | ❌ |
 | **Raw Output** | ✅ | ✅ |
 | **Zoom In / Zoom Out** | ✅ | ❌ |
