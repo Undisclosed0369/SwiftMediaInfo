@@ -21,6 +21,19 @@ Built entirely with **SwiftUI** for macOS.
 
 ---
 
+## 💡 Your Feedback Matters!
+
+I'm actively improving SwiftMediaInfo and would love your feedback.
+
+If you have an idea for a new feature, workflow improvement, or UI enhancement or if you just want to talk about your experience with the app, please submit it here:
+
+[Feedback Form](https://forms.gle/ZoDwomdm5asgfj386) (~ 90 seconds avg. depending on answers)
+
+Every submission is read and considered for future releases. Thank you for helping shape SwiftMediaInfo!
+
+
+---
+
 # Features
 
 * 📄 **Easy View** – Browse media metadata in an organized tree layout
@@ -42,16 +55,27 @@ Built entirely with **SwiftUI** for macOS.
 
 ---
 
-## 💡 Your Feedback Matters!
+# Feature Comparison
 
-I'm actively improving SwiftMediaInfo and would love your feedback.
+| Feature | SwiftMediaInfo | Official MediaInfo |
+| --- | --- | --- |
+| **Native macOS UI & Swift Code** | ✅ | ❌ |
+| **Liquid Glass UI** | ✅ | ❌ |
+| **Compare View** | ✅ | ❌ |
+| **Open in Default App** | ✅ | ❌ |
+| **Zoom In / Zoom Out** | ✅ | ❌ |
+| **Keyboard Shortcuts** | ✅ | ❌ |
+| **Lazy Loading** | ✅ | ❌ |
+| **Structured Metadata Tree** | ✅ | ✅ |
+| **HTML Rendering** | ✅ | ✅ |
+| **Text View** | ✅ | ✅ |
+| **Recent Files** | ✅ | ✅ |
+| **Raw Output** | ✅ | ✅ |
+| **Multiple Export Formats** | ✅ | ✅ |
+| **Lightweight UI** | ✅ | ✅ |
+| **Open Source** | ✅ | ✅ |
 
-If you have an idea for a new feature, workflow improvement, or UI enhancement or just want to talk about your experience with the app, please submit it here:
-
-[Feedback Form](https://forms.gle/ZoDwomdm5asgfj386) (~ 90 seconds avg. depending on answers)
-
-Every submission is read and considered for future releases. Thank you for helping shape SwiftMediaInfo!
-
+SwiftMediaInfo focuses on providing a **modern macOS-native interface** for MediaInfo functionality.
 
 ---
 
@@ -217,30 +241,6 @@ After running the command, open the app again and it should launch normally.
 
 * macOS 26 (older versions not tested)
 * Xcode (only required for building from source)
-
----
-
-# Feature Comparison
-
-| Feature | SwiftMediaInfo | Official MediaInfo |
-| --- | --- | --- |
-| **Native macOS UI & Swift Code** | ✅ | ❌ |
-| **Liquid Glass UI** | ✅ | ❌ |
-| **Structured Metadata Tree** | ✅ | ✅ |
-| **HTML Rendering** | ✅ | ✅ |
-| **Text View** | ✅ | ✅ |
-| **Compare View** | ✅ | ❌ |
-| **Recent Files** | ✅ | ✅ |
-| **Open in Default App** | ✅ | ❌ |
-| **Raw Output** | ✅ | ✅ |
-| **Zoom In / Zoom Out** | ✅ | ❌ |
-| **Multiple Export Formats** | ✅ | ✅ |
-| **Keyboard Shortcuts** | ✅ | ❌ |
-| **Lightweight UI** | ✅ | ✅ |
-| **Lazy Loading** | ✅ | ❌ |
-| **Open Source** | ✅ | ✅ |
-
-SwiftMediaInfo focuses on providing a **modern macOS-native interface** for MediaInfo functionality.
 
 ---
 
