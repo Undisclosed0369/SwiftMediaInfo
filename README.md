@@ -31,7 +31,6 @@ If you have an idea for a new feature, workflow improvement, or UI enhancement o
 
 Every submission is read and considered for future releases. Thank you for helping shape SwiftMediaInfo!
 
-
 ---
 
 # Features
@@ -42,7 +41,9 @@ Every submission is read and considered for future releases. Thank you for helpi
 * 🌐 **HTML View** – Render MediaInfo output in a styled HTML interface
 * ⚖️ **Compare View** – Compare two media files side-by-side in split screen mode
 * 🎨 **Native macOS Interface** – Built using SwiftUI and modern macOS design principles
-* 🎨 **Liquid Glass UI** – Modern, sleek, translucent interface designed strictly for macOS
+* 🎨 **Liquid Glass UI** – Modern, sleek, translucent interface designed strictly for macOS with an optional animated background toggle
+* 🛠 **Finder Context Menu** – Right-click any file in Finder to instantly open it directly in SwiftMediaInfo
+* 📂 **Unified Open Action** – Smart, single-button workflow for opening both files and folders seamlessly
 * 🕒 **Recent Files** – Quickly re-open and access recently inspected media assets
 * 📂 **Open in Default App** – Instantly open media files in their associated applications
 * 🔎 **Zoom In / Zoom Out** – Adjust text size dynamically for easier readability
@@ -51,7 +52,7 @@ Every submission is read and considered for future releases. Thank you for helpi
 * 📤 **Export Function** – Export metadata in multiple formats or ZIP bundles
 * ⚡ **Lazy Loading Support** – Improved performance while opening large media files
 * 🧠 **UTF-8 Filename Support** – Improved compatibility with special characters and non-English filenames
-* ⚡ **Fast & Lightweight** – Minimal overhead with a responsive UI
+* ⚡ **Fast & Lightweight** – Optimized and cleaned codebase for rapid, resource-efficient performance
 
 ---
 
@@ -117,31 +118,31 @@ This makes it useful for both **human inspection and automated workflows**.
 ### Easy View
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC1_EasyView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S1_EasyView.png" width="450">
 </p>
 
 ### Text View
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC2_TextView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S2_TextView.png" width="450">
 </p>
 
 ### Compare View
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC3_CompareView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S3_CompareView.png" width="450">
 </p>
 
 ### HTML View
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC4_HTMLView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S4_HTMLView.png" width="450">
 </p>
 
 ### Light Mode
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC5_LightMode.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S5_LightMode.png" width="450">
 </p>
 
 ---
@@ -210,7 +211,7 @@ Download the latest pre-compiled application bundle directly from the **[Release
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Undisclosed0369/SwiftMediaInfo.git
+git clone [https://github.com/Undisclosed0369/SwiftMediaInfo.git](https://github.com/Undisclosed0369/SwiftMediaInfo.git)
 
 ```
 
@@ -406,6 +407,6 @@ Discord
 
 # Project Status
 
-Version **1.4 Final Release**
+Version **1.5 Final Release**
 
 More improvements may come in future updates.
