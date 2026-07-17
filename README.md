@@ -118,31 +118,31 @@ This makes it useful for both **human inspection and automated workflows**.
 ### Easy View
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S1_EasyView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S1_EasyView.png" width="500">
 </p>
 
 ### Text View
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S2_TextView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S2_TextView.png" width="500">
 </p>
 
 ### Compare View
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S3_CompareView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S3_CompareView.png" width="500">
 </p>
 
 ### HTML View
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S4_HTMLView.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S4_HTMLView.png" width="500">
 </p>
 
 ### Light Mode
 
 <p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S5_LightMode.png" width="450">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S5_LightMode.png" width="500">
 </p>
 
 ---
