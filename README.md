@@ -38,21 +38,77 @@ Every submission is read and considered for future releases. Thank you for helpi
 * 📄 **Easy View** – Browse media metadata in an organized tree layout
 * 📝 **Text View** – Read media information in a simplified text-focused layout
 * 📝 **Raw Text View** – Inspect the Full MediaInfo output directly
-* 🌐 **HTML View** – Render MediaInfo output in a styled HTML interface
-* ⚖️ **Compare View** – Compare two media files side-by-side in split screen mode
+* 🌐 **Webkit-Powered HTML View** – Rewritten HTML rendering using WKWebView with custom CSS themes, smooth zooming, and injected search match highlights
+* ⚖️ **Compare View** – Compare two media files side-by-side in split screen mode with split status bar details and marquee scrolling filenames
+* 🌐 **Share Online** – Upload metadata directly to paste services (`pb.plz.ac` for text/code or `up.sb` for ZIP bundles) and instantly copy shareable links
+* 🔍 **Floating Search & Fuzzy Matching** – Non-intrusive global search (`⌘F`) with match counts, navigation arrows, and space-normalized fuzzy terms (e.g. "bitrate" matches "Bit Rate")
+* ⚖️ **Difference Highlighting** – Color-coded field and line comparison (`⌘D`) with track-level difference count badges in Compare Mode
 * 🎨 **Native macOS Interface** – Built using SwiftUI and modern macOS design principles
-* 🎨 **Liquid Glass UI** – Modern, sleek, translucent interface designed strictly for macOS with an optional animated background toggle
+* 🎨 **Liquid Glass UI** – Modern, sleek, translucent interface designed strictly for macOS with zero-overhead background animation pause logic
 * 🛠 **Finder Context Menu** – Right-click any file in Finder to instantly open it directly in SwiftMediaInfo
+* 🛠 **Dependency Diagnostic Check** – Automatically checks for `mediainfo`, `curl`, and `zip` on launch with one-click installation prompts
 * 📂 **Unified Open Action** – Smart, single-button workflow for opening both files and folders seamlessly
 * 🕒 **Recent Files** – Quickly re-open and access recently inspected media assets
 * 📂 **Open in Default App** – Instantly open media files in their associated applications
-* 🔎 **Zoom In / Zoom Out** – Adjust text size dynamically for easier readability
+* 🔎 **Zoom In / Zoom Out** – Adjust text size dynamically for easier readability with capsule pill zoom badges
   *(Zoom using CMD + Plus and CMD + Minus)*
-* ⌨️ **Keyboard Shortcuts** – Quickly switch between views and actions using keyboard shortcuts
+* ⌨️ **Keyboard Shortcuts & Quick Reference** – Full keyboard navigation plus an interactive reference window (`⌘K`)
 * 📤 **Export Function** – Export metadata in multiple formats or ZIP bundles
-* ⚡ **Lazy Loading Support** – Improved performance while opening large media files
+* ⚡ **Lazy Loading & Thread Offloading Support** – Improved performance while parsing large complex media files on background tasks
 * 🧠 **UTF-8 Filename Support** – Improved compatibility with special characters and non-English filenames
 * ⚡ **Fast & Lightweight** – Optimized and cleaned codebase for rapid, resource-efficient performance
+
+---
+
+# Screenshots
+
+### Easy View
+
+<p align="center">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC1_EasyView.png" width="600">
+</p>
+
+### Text View
+
+<p align="center">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC2_TextView.png" width="600">
+</p>
+
+### Compare View
+
+<p align="center">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC3_CompareView.png" width="600">
+</p>
+
+### Highlight Difference in Compare View (works in Easy, Text and Raw Text View)
+
+<p align="center">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC4_HighlightDifferences.png" width="600">
+</p>
+
+### Search Function
+
+<p align="center">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC5_Search.png" width="600">
+</p>
+
+### HTML View
+
+<p align="center">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC6_HTMLView.png" width="600">
+</p>
+
+### Share Function
+
+<p align="center">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC7_Share.png" width="600">
+</p>
+
+### Light Mode
+
+<p align="center">
+<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/SC8_LightMode.png" width="600">
+</p>
 
 ---
 
@@ -62,11 +118,14 @@ Every submission is read and considered for future releases. Thank you for helpi
 | --- | --- | --- |
 | **Native macOS UI & Swift Code** | ✅ | ❌ |
 | **Liquid Glass UI** | ✅ | ❌ |
+| **Online Sharing & Links** | ✅ | ❌ |
+| **Global Fuzzy Search Bar** | ✅ | ❌ |
+| **Difference Highlighting** | ✅ | ❌ |
 | **Compare View** | ✅ | ❌ |
 | **Open in Default App** | ✅ | ❌ |
 | **Zoom In / Zoom Out** | ✅ | ❌ |
-| **Keyboard Shortcuts** | ✅ | ❌ |
-| **Lazy Loading** | ✅ | ❌ |
+| **Keyboard Shortcuts Reference** | ✅ | ❌ |
+| **Lazy Loading & Background Parsing** | ✅ | ❌ |
 | **Structured Metadata Tree** | ✅ | ✅ |
 | **HTML Rendering** | ✅ | ✅ |
 | **Text View** | ✅ | ✅ |
@@ -92,7 +151,16 @@ SwiftMediaInfo focuses on providing a **modern macOS-native interface** for Medi
 | **CMD + 6** | JSON View |
 | **SHIFT + CMD + C** | Open Compare Mode |
 | **CMD + Return** | Open File in Default App |
+| **CMD + F** | Search / Filter Bar |
+| **CMD + D** | Toggle Difference Highlighting |
+| **CMD + B** | Toggle Animated Background |
+| **CMD + K** | Keyboard Shortcuts Reference |
+| **CMD + M** | Cycle Appearance (Light → Dark → System) |
+| **CMD + 0** | Reset Zoom to 100% |
 | **CMD + E** | Export |
+
+
+Too many Keyboard Shortcuts to remember? You can now use **CMD + K** to open the Keyboard Shortcuts Panel in the app!
 
 ---
 
@@ -110,40 +178,6 @@ SwiftMediaInfo allows exporting media information into several formats:
 | **ZIP** | Export all formats together          |
 
 This makes it useful for both **human inspection and automated workflows**.
-
----
-
-# Screenshots
-
-### Easy View
-
-<p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S1_EasyView.png" width="600">
-</p>
-
-### Text View
-
-<p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S2_TextView.png" width="600">
-</p>
-
-### Compare View
-
-<p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S3_CompareView.png" width="600">
-</p>
-
-### HTML View
-
-<p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S4_HTMLView.png" width="600">
-</p>
-
-### Light Mode
-
-<p align="center">
-<img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S5_LightMode.png" width="600">
-</p>
 
 ---
 
@@ -211,7 +245,7 @@ Download the latest pre-compiled application bundle directly from the **[Release
 1. Clone the repository:
 
 ```bash
-git clone [https://github.com/Undisclosed0369/SwiftMediaInfo.git](https://github.com/Undisclosed0369/SwiftMediaInfo.git)
+git clone https://github.com/Undisclosed0369/SwiftMediaInfo.git
 
 ```
 
@@ -389,7 +423,7 @@ That is also probably why updates sometimes take longer than expected.
 
 This project is licensed under the MIT License.
 
-See the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
+See the [LICENSE](https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/LICENSE) file for details.
 
 ---
 
@@ -407,6 +441,6 @@ Discord
 
 # Project Status
 
-Version **1.5 Final Release**
+Version **1.6 Final Release**
 
 More improvements may come in future updates.
