@@ -1,0 +1,50 @@
+name: Notify site of release
+
+# THIS FILE BELONGS IN THE APP REPOSITORY, NOT THE SITE ONE.
+#
+#   Undisclosed0369/SwiftMediaInfo/.github/workflows/notify-site.yml
+#
+# It does one thing: when a release is published here, it tells the website
+# repository to rebuild its changelog. The site's own workflow already listens
+# for this — see `repository_dispatch` in its `on:` block — so nothing there
+# needs changing.
+#
+# WHY A TOKEN IS NEEDED HERE AND NOT THERE
+#
+# The site's workflow reads public releases, which needs no credentials, and
+# writes to its own repository, which its built-in token already covers. This
+# one has to reach ACROSS to another repository, and the built-in token is
+# scoped to the repository it runs in. Hence a personal access token, stored
+# as a secret. Setup instructions are in the delivery notes.
+
+on:
+  release:
+    types: [published]
+
+  # So the ping can be sent again by hand if a run fails, without republishing
+  # the release.
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tell the website to rebuild its changelog
+        env:
+          TOKEN: ${{ secrets.SITE_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "SITE_DISPATCH_TOKEN is not set — skipping."
+            echo "The site will still pick this release up on its daily run."
+            exit 0
+          fi
+
+          curl --fail --silent --show-error \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/Undisclosed0369/SwiftMediaInfo/dispatches \
+            -d '{"event_type":"release-published"}'
+
+          echo "Website notified."
