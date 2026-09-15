@@ -1,50 +1,59 @@
-name: Notify site of release
+name: Notify site
 
-# THIS FILE BELONGS IN THE APP REPOSITORY, NOT THE SITE ONE.
+# WHEN THIS RUNS
 #
-#   Undisclosed0369/SwiftMediaInfo/.github/workflows/notify-site.yml
+# Whenever a release here is published, edited or deleted — not on a draft
+# being saved, not on a tag being pushed.
 #
-# It does one thing: when a release is published here, it tells the website
-# repository to rebuild its changelog. The site's own workflow already listens
-# for this — see `repository_dispatch` in its `on:` block — so nothing there
-# needs changing.
+# `edited` and `deleted` are included because the site's script does not add
+# releases to the changelog one at a time: it regenerates the whole page from
+# the API on every run. So a correction to an old release's notes is picked up
+# just as readily as a new release — but only when something asks it to run.
+# Without these two events, fixing a typo in the 1.6 notes would sit unpublished
+# until the next scheduled run.
 #
-# WHY A TOKEN IS NEEDED HERE AND NOT THERE
+# WHY IT EXISTS
 #
-# The site's workflow reads public releases, which needs no credentials, and
-# writes to its own repository, which its built-in token already covers. This
-# one has to reach ACROSS to another repository, and the built-in token is
-# scoped to the repository it runs in. Hence a personal access token, stored
-# as a secret. Setup instructions are in the delivery notes.
+# The website's changelog page is generated from this repository's releases by
+# a workflow in the site repo. That workflow runs on a schedule, which means a
+# new release can take up to a day to appear on the site.
+#
+# This closes that gap. When a release goes out, this sends a signal to the
+# site repo, which regenerates the changelog immediately.
+#
+# It is not load-bearing. If the token expires or this fails, the scheduled run
+# picks the release up within a day and nothing is lost. That is why the
+# failure is allowed to be quiet.
 
 on:
   release:
-    types: [published]
-
-  # So the ping can be sent again by hand if a run fails, without republishing
-  # the release.
-  workflow_dispatch:
+    types: [published, edited, deleted]
 
 jobs:
   notify:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Tell the website to rebuild its changelog
+      - name: Tell the site the releases have changed
         env:
+          # A personal access token with permission to write to the SITE
+          # repository. The automatic GITHUB_TOKEN cannot be used here: it is
+          # scoped to this repository only, and this job needs to reach across
+          # to another one.
           TOKEN: ${{ secrets.SITE_DISPATCH_TOKEN }}
         run: |
           if [ -z "$TOKEN" ]; then
-            echo "SITE_DISPATCH_TOKEN is not set — skipping."
-            echo "The site will still pick this release up on its daily run."
+            echo "No SITE_DISPATCH_TOKEN set — skipping."
+            echo "The site's scheduled run will pick this change up within a day."
             exit 0
           fi
 
-          curl --fail --silent --show-error \
-            -X POST \
+          curl -sS -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer $TOKEN" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/Undisclosed0369/SwiftMediaInfo/dispatches \
-            -d '{"event_type":"release-published"}'
+            https://api.github.com/repos/Undisclosed0369/undisclosed0369.app/dispatches \
+            -d '{"event_type":"release-published"}' \
+            --fail-with-body
 
-          echo "Website notified."
+          echo "Site notified."
