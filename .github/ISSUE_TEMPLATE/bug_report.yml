@@ -1,0 +1,71 @@
+name: Bug report
+description: Something does not work, or works wrongly
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. The most useful thing you can give me is a way to make the problem happen again — a bug I can reproduce is usually fixed the same day.
+
+        **Before you write:** please check the [FAQ](https://undisclosed0369.app/swiftmediainfo/faq.html) if this is about the "app is damaged" warning or about MediaInfo needing to be installed separately. Both are expected, and both are explained there.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What went wrong, and what you expected instead.
+      placeholder: |
+        I expected…
+        Instead…
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to make it happen again
+      description: Numbered steps, if you can. This is the part that matters most.
+      placeholder: |
+        1. Open a file
+        2. Press ⌘⇧C
+        3. …
+    validations:
+      required: true
+
+  - type: dropdown
+    id: reproducible
+    attributes:
+      label: Does it happen every time?
+      options:
+        - Every time
+        - Most times
+        - Occasionally
+        - It happened once
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: |
+        In the app: **Settings → Advanced → Copy environment summary**, then paste it here. That covers the app version, macOS, architecture, MediaInfo path and version, and your settings.
+      render: text
+    validations:
+      required: true
+
+  - type: input
+    id: file
+    attributes:
+      label: The file involved, if any
+      description: Format and rough size is plenty. Please do not attach the file unless I ask.
+      placeholder: "a 4 GB MKV, three audio tracks, PGS subtitles"
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots or anything else
+      description: |
+        Screenshots are welcome and often decide a question in one glance.
+
+        **Check them first** — file paths usually contain your username, and sometimes more than that.

@@ -1,0 +1,36 @@
+name: Feature idea
+description: Something the app should do, or should do differently
+labels: ["idea"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The best features in this app came from someone noticing an annoyance and refusing to live with it. Tell me about yours.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is awkward at the moment
+      description: The problem rather than the solution. What are you trying to do, and what gets in the way?
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: What you think should happen
+      description: Your idea, as specific or as loose as you like. "I don't know how this should work, but…" is a perfectly good answer.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: How you work around it now
+      description: If you have a workaround, knowing it helps me understand how much the change is worth.
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        **On implementation:** if you know how this should be built, describe it in words — I will write it. This project does not accept code contributions, for reasons set out in [CONTRIBUTING.md](https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/CONTRIBUTING.md). Ideas get credited in the release notes.

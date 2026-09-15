@@ -1,0 +1,13 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Frequently asked questions
+    url: https://undisclosed0369.app/swiftmediainfo/faq.html
+    about: The app says it is damaged, MediaInfo has to be installed separately, what leaves your machine — all answered here first.
+
+  - name: Security vulnerability
+    url: https://github.com/Undisclosed0369/SwiftMediaInfo/security/advisories/new
+    about: Please report security problems privately rather than in a public issue.
+
+  - name: Feedback form
+    url: https://forms.gle/ZoDwomdm5asgfj386
+    about: Ninety seconds, no GitHub account needed. For general impressions rather than specific bugs.
