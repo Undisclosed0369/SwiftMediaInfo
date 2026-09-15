@@ -2,6 +2,13 @@
 //  ViewMode.swift
 //  SwiftMediaInfo
 //
+//  PHASE 1 — the only change here is that MediaFile can now remember why a
+//  format failed to load, instead of just holding nil and leaving the UI to
+//  guess whether that meant "not loaded yet", "empty", or "something broke".
+//
+//  The existing isLoading flags are untouched, so no view needs to change yet.
+//  Phase 3 replaces flags + errors with a single explicit state model.
+//
 
 import Foundation
 import SwiftUI
@@ -112,6 +119,11 @@ struct MediaTrack: Identifiable {
         if !title.isEmpty { parts.append(title) }
         return parts.joined(separator: " · ")
     }
+    
+    /// Look up a single field's value by its raw MediaInfo key.
+    func value(for key: String) -> String? {
+        fields.first(where: { $0.key == key })?.value
+    }
 }
 
 // MARK: - MediaFile
@@ -120,13 +132,60 @@ struct MediaTrack: Identifiable {
 // nil  = not fetched yet  →  show "Load" button
 // ""   = fetched but empty (unlikely)
 // text = ready to display
+//
+// Each format now also has a matching error slot. nil error + nil content
+// means "not loaded yet"; non-nil error means "we tried and it failed".
 
 struct MediaFile: Identifiable, Equatable {
     let id   = UUID()
     let url  : URL
     
+    /// Written explicitly because `parsedTracks` below is private, which makes
+    /// the synthesised memberwise initialiser private too — and both call
+    /// sites construct a MediaFile from just a URL.
+    init(url: URL) {
+        self.url = url
+    }
+    
     // Parsed track data (from JSON). Populated automatically with Easy view.
-    var tracks: [MediaTrack] = []
+    //
+    // PHASE 10 — stored separately from what callers read, because the
+    // checksum is injected on the way out.
+    //
+    // The digest used to be written into the stored array when hashing
+    // finished. That worked for about a second: a cached digest is applied the
+    // instant a file opens, and the JSON analysis then finishes and replaces
+    // the whole array, taking the injected field with it. Injecting on read
+    // makes the order irrelevant.
+    private var parsedTracks: [MediaTrack] = []
+    
+    var tracks: [MediaTrack] {
+        get {
+            // The overwhelmingly common case — no digest — returns the stored
+            // array untouched, so this costs nothing for files that are not
+            // hashed.
+            guard let digest = hashState.digest else { return parsedTracks }
+            
+            return parsedTracks.map { track in
+                guard track.type == "General" else { return track }
+                
+                var updated = track
+                let entry = (key: FileHasher.fieldKey, value: digest)
+                
+                // Appended rather than inserted: the fields before it are what
+                // MediaInfo actually reported, and a value the app calculated
+                // itself should not push them down the list.
+                if let index = updated.fields.firstIndex(where: { $0.key == FileHasher.fieldKey }) {
+                    updated.fields[index] = entry
+                } else {
+                    updated.fields.append(entry)
+                }
+                
+                return updated
+            }
+        }
+        set { parsedTracks = newValue }
+    }
     
     // Per-format raw strings. nil means "not loaded yet".
     var rawText:     String? = nil   // normal mediainfo output
@@ -142,8 +201,28 @@ struct MediaFile: Identifiable, Equatable {
     var isLoadingXML:      Bool = false
     var isLoadingJSON:     Bool = false
     
+    // Per-format failure reasons. nil means "no failure recorded".
+    var textError:    MediaInfoError? = nil
+    var rawTextError: MediaInfoError? = nil
+    var htmlError:    MediaInfoError? = nil
+    var xmlError:     MediaInfoError? = nil
+    var jsonError:    MediaInfoError? = nil
+    
+    /// The failure that best represents "this file could not be analysed".
+    /// Set when the initial parallel load fails; drives the primary error state.
+    var loadError: MediaInfoError? = nil
+    
     // Overall "first load in progress" flag shown in MainDetailView
     var isLoading: Bool = true
+    
+    /// PHASE 10 — where this file's SHA-256 has got to.
+    ///
+    /// The finished digest is also injected into the General track as a normal
+    /// field, so Easy View, Compare Mode's diff, search, CSV export and the
+    /// copy actions all pick it up without knowing hashing exists. This
+    /// property carries the states a plain field cannot: waiting, running,
+    /// cancelled, failed.
+    var hashState: HashState = .notApplicable
     
     static func == (lhs: MediaFile, rhs: MediaFile) -> Bool { lhs.id == rhs.id }
     
@@ -152,6 +231,24 @@ struct MediaFile: Identifiable, Equatable {
     var fileSizeString: String {
         guard let size = try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize else { return "" }
         return ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)
+    }
+    
+    /// Whether this "file" is actually a directory. Folders are valid input —
+    /// mediainfo describes their contents — but they have no track structure,
+    /// so Easy View needs to say something more useful than "no tracks found".
+    var isDirectory: Bool {
+        (try? url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true
+    }
+    
+    /// The error for a specific view mode, if that format failed.
+    func error(for mode: ViewMode) -> MediaInfoError? {
+        switch mode {
+        case .easy, .json: return jsonError
+        case .text:        return textError
+        case .rawText:     return rawTextError
+        case .html:        return htmlError
+        case .xml:         return xmlError
+        }
     }
     
     var generalTrack: MediaTrack?  { tracks.first(where: { $0.type == "General" }) }

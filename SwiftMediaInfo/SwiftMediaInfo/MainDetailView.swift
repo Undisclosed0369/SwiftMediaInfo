@@ -2,6 +2,16 @@
 //  MainDetailView.swift
 //  SwiftMediaInfo
 //
+//  PHASE 3 — every pane now routes through ContentState.
+//
+//  The old version had a nested if/else per tab that inferred meaning from nil
+//  strings. That's gone: one call to ContentState.resolve decides what to show,
+//  and anything that isn't `.ready` is drawn by ContentStateView. Adding a new
+//  state later means changing one enum, not six branches.
+//
+//  Empty-state and recent-file chips are unchanged in behaviour but now read
+//  from the design tokens.
+//
 
 import SwiftUI
 
@@ -14,34 +24,77 @@ struct MainDetailView: View {
                 CompareView()
                     .transition(.opacity.combined(with: .scale(scale: 0.98)))
             } else if let file = store.currentFile {
-                if file.isLoading {
-                    loadingView(name: file.fileName)
-                        .transition(.opacity)
-                } else {
-                    fileContentView(file: file)
-                        .transition(.opacity.combined(with: .move(edge: .bottom)))
-                }
+                paneContent(file: file)
             } else {
                 EmptyStateView()
                     .transition(.opacity)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .animation(.spring(response: 0.4, dampingFraction: 0.82), value: store.currentFile?.id)
-        .animation(.spring(response: 0.4, dampingFraction: 0.82), value: store.isCompareMode)
+        .smiAnimation(SMI.Motion.smooth, value: store.currentFile?.id)
+        .smiAnimation(SMI.Motion.smooth, value: store.isCompareMode)
         .onChange(of: store.viewMode) { _, newMode in
             store.loadFormatIfNeeded(newMode, isCompare: false)
         }
+        // Opening a file while already sitting on a lazy tab used to leave the
+        // "Load HTML" button showing, because no tab change occurred to trigger
+        // the fetch. Lazy loading still applies — a format is only fetched when
+        // its tab is actually on screen — it just no longer needs a manual nudge.
+        .onChange(of: store.currentFile?.id) { _, _ in
+            store.loadFormatIfNeeded(store.viewMode, isCompare: false)
+        }
+        .onChange(of: store.currentFile?.isLoading) { _, isLoading in
+            // The initial parallel analysis has to finish before an on-demand
+            // format can be requested, so retry once it completes.
+            if isLoading == false {
+                store.loadFormatIfNeeded(store.viewMode, isCompare: false)
+            }
+        }
     }
     
-    // MARK: - Content router
+    // MARK: - Pane router
+    
+    @ViewBuilder
+    private func paneContent(file: MediaFile) -> some View {
+        let state = ContentState.resolve(file: file, mode: store.viewMode)
+        
+        Group {
+            if state.isReady {
+                readyContent(file: file)
+                    .transition(.opacity)
+            } else {
+                ContentStateView(state: state, isCompare: false)
+                    .transition(.opacity)
+            }
+        }
+        .smiAnimation(SMI.Motion.fade, value: state)
+    }
     
     private var isSearchActive: Bool {
         store.showSearchBar && !store.searchQuery.isEmpty
     }
     
     @ViewBuilder
-    private func fileContentView(file: MediaFile) -> some View {
+    private func readyContent(file: MediaFile) -> some View {
+        VStack(spacing: 0) {
+            // PHASE 10. Above the tab content rather than inside Easy View, so
+            // it survives the switch to the search and diff variants and stays
+            // visible on the text tabs too. A checksum that vanishes when you
+            // change tab is one you cannot watch finish.
+            //
+            // Renders nothing once the digest is ready — at that point the
+            // store has injected it into the General track, where it behaves
+            // like any other field.
+            ChecksumCard(isCompare: false)
+                .padding(.horizontal, SMI.Spacing.xLarge)
+                .padding(.top, SMI.Spacing.large)
+            
+            tabContent(file: file)
+        }
+    }
+    
+    @ViewBuilder
+    private func tabContent(file: MediaFile) -> some View {
         switch store.viewMode {
             
         case .easy:
@@ -52,179 +105,40 @@ struct MainDetailView: View {
             }
             
         case .text:
-            if let content = file.rawText, !content.isEmpty {
-                if isSearchActive {
-                    FilterableRawTextView(content: content)
-                } else {
-                    RawTextView(content: content)
-                }
-            } else if file.rawText != nil {
-                noOutputPlaceholder
-            } else {
-                onDemandPlaceholder(label: "Text", isLoading: file.isLoadingText, color: .brandViolet) {
-                    store.loadFormatIfNeeded(.text)
-                }
-            }
+            textualContent(file.rawText)
             
         case .rawText:
-            if let content = file.rawTextFull, !content.isEmpty {
-                if isSearchActive {
-                    FilterableRawTextView(content: content)
-                } else {
-                    RawTextView(content: content)
-                }
-            } else if file.rawTextFull != nil {
-                noOutputPlaceholder
-            } else {
-                onDemandPlaceholder(label: "Raw Text", isLoading: file.isLoadingRawText, color: .brandPink) {
-                    store.loadFormatIfNeeded(.rawText)
-                }
-            }
-            
-        case .html:
-            if let content = file.rawHTML, !content.isEmpty {
-                HTMLView(htmlString: content)
-            } else if file.rawHTML != nil {
-                noOutputPlaceholder
-            } else {
-                onDemandPlaceholder(label: "HTML", isLoading: file.isLoadingHTML, color: .brandGreen) {
-                    store.loadFormatIfNeeded(.html)
-                }
-            }
+            textualContent(file.rawTextFull)
             
         case .xml:
-            if let content = file.rawXML, !content.isEmpty {
-                if isSearchActive {
-                    FilterableRawTextView(content: content)
-                } else {
-                    RawTextView(content: content)
-                }
-            } else if file.rawXML != nil {
-                noOutputPlaceholder
-            } else {
-                onDemandPlaceholder(label: "XML", isLoading: file.isLoadingXML, color: .brandBlue) {
-                    store.loadFormatIfNeeded(.xml)
-                }
-            }
+            textualContent(file.rawXML)
             
         case .json:
-            if let content = file.rawJSON, !content.isEmpty {
-                if isSearchActive {
-                    FilterableRawTextView(content: content)
-                } else {
-                    RawTextView(content: content)
-                }
-            } else if file.rawJSON != nil {
-                noOutputPlaceholder
+            textualContent(file.rawJSON)
+            
+        case .html:
+            if let content = file.rawHTML {
+                HTMLView(htmlString: content)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func textualContent(_ content: String?) -> some View {
+        if let content {
+            if isSearchActive {
+                FilterableRawTextView(content: content)
             } else {
-                onDemandPlaceholder(label: "JSON", isLoading: file.isLoadingJSON, color: .brandViolet) {
-                    store.loadFormatIfNeeded(.json)
-                }
+                RawTextView(content: content)
             }
         }
     }
-    
-    // MARK: - No output placeholder
-    
-    private var noOutputPlaceholder: some View {
-        GlassPlaceholder(
-            icon: "doc.questionmark",
-            title: "No output from MediaInfo",
-            subtitle: "MediaInfo ran but returned nothing for this file.\nThe file might be unsupported or MediaInfo may not be installed.",
-            accentColor: .brandPink
-        )
-    }
-    
-    // MARK: - On-demand placeholder
-    
-    private func onDemandPlaceholder(
-        label: String,
-        isLoading: Bool,
-        color: Color,
-        action: @escaping () -> Void
-    ) -> some View {
-        VStack(spacing: 20) {
-            if isLoading {
-                ProgressView()
-                    .tint(color)
-                    .scaleEffect(1.2)
-                Text("Loading \(label)…")
-                    .font(.headline)
-                    .foregroundStyle(color)
-            } else {
-                Image(systemName: "arrow.down.circle")
-                    .font(.system(size: 44))
-                    .foregroundStyle(color.opacity(0.5))
-                    .symbolEffect(.pulse)
-                Text("\(label) not loaded yet")
-                    .font(.title3.weight(.semibold))
-                    .foregroundStyle(.primary)
-                Text("This format loads on demand to keep things fast.")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                Button("Load \(label)") { action() }
-                    .buttonStyle(.borderedProminent)
-                    .tint(color)
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-    
-    // MARK: - Loading / error
-    
-    private func loadingView(name: String) -> some View {
-        VStack(spacing: 20) {
-            ZStack {
-                Circle()
-                    .fill(Color.brandViolet.opacity(0.12))
-                    .frame(width: 72, height: 72)
-                ProgressView()
-                    .tint(.brandViolet)
-                    .scaleEffect(1.3)
-            }
-            Text("Analysing \(name)…")
-                .font(.title3.weight(.semibold))
-                .foregroundStyle(.primary)
-            Text("Fetching all formats in parallel.")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-    
 }
 
 // MARK: - Reusable glass placeholder
-
-struct GlassPlaceholder: View {
-    let icon: String
-    let title: String
-    let subtitle: String
-    var accentColor: Color = .brandViolet
-    
-    var body: some View {
-        VStack(spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(accentColor.opacity(0.12))
-                    .frame(width: 80, height: 80)
-                Image(systemName: icon)
-                    .font(.system(size: 32, weight: .medium))
-                    .foregroundStyle(accentColor.opacity(0.75))
-            }
-            Text(title)
-                .font(.title3.weight(.semibold))
-                .foregroundStyle(.primary)
-            Text(subtitle)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: 360)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
+//
+// Retained for any caller outside the state system. New code should prefer
+// ContentStateView so states stay consistent.
 
 // MARK: - Empty state
 
@@ -233,37 +147,41 @@ struct EmptyStateView: View {
     @State private var hovered = false
     
     var body: some View {
-        VStack(spacing: 24) {
-            // Animated icon
+        VStack(spacing: SMI.Spacing.xxLarge) {
+            
             ZStack {
                 Circle()
                     .fill(
                         RadialGradient(
-                            colors: [Color.brandViolet.opacity(0.18), Color.brandBlue.opacity(0.08)],
+                            colors: [
+                                Color.brandViolet.opacity(0.18),
+                                Color.brandBlue.opacity(0.06)
+                            ],
                             center: .center,
                             startRadius: 0,
-                            endRadius: 60
+                            endRadius: 64
                         )
                     )
-                    .frame(width: 120, height: 120)
-                    .scaleEffect(hovered ? 1.08 : 1.0)
+                    .frame(width: 128, height: 128)
+                    .scaleEffect(hovered ? 1.06 : 1.0)
                 
                 Image(systemName: "film.stack")
                     .font(.system(size: 52, weight: .thin))
-                    .foregroundStyle(
-                        LinearGradient.brandBlueViolet
-                    )
-                    .scaleEffect(hovered ? 1.05 : 1.0)
+                    .foregroundStyle(LinearGradient.brandBlueViolet)
+                    .scaleEffect(hovered ? 1.04 : 1.0)
             }
-            .animation(.spring(response: 0.45, dampingFraction: 0.6), value: hovered)
+            .smiAnimation(SMI.Motion.flourish, value: hovered)
+            // Illustration. It repeats what the headline underneath already
+            // says, so it stays silent.
+            .smiDecorativeChrome()
             
-            VStack(spacing: 8) {
+            VStack(spacing: SMI.Spacing.small) {
                 Text("Drop a media file to get started")
-                    .font(.title2.weight(.semibold))
+                    .font(SMI.Typo.display)
                     .foregroundStyle(.primary)
                 
-                Text("Or use File › Open, or the Open button above.")
-                    .font(.subheadline)
+                Text("Or press ⌘O, or use the Open button above.")
+                    .font(SMI.Typo.body)
                     .foregroundStyle(.secondary)
             }
             
@@ -272,41 +190,51 @@ struct EmptyStateView: View {
                 .tint(.brandViolet)
                 .controlSize(.large)
             
-            // ── Recent files chips ─────────────────────────────────────────
+            // ── Recent files ───────────────────────────────────────────────
             if !store.recentFileURLs.isEmpty {
-                VStack(spacing: 10) {
-                    Text("Recent Files")
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(.secondary)
+                VStack(spacing: SMI.Spacing.medium) {
+                    GlassSectionHeader(title: "Recent Files", icon: "clock.arrow.circlepath")
+                        .frame(maxWidth: 600)
                     
-                    // Wrap chips in a flow-like grid (fixed columns, up to 10 items)
-                    let columns = [GridItem(.adaptive(minimum: 160, maximum: 260), spacing: 8)]
-                    LazyVGrid(columns: columns, spacing: 8) {
+                    let columns = [
+                        GridItem(.adaptive(minimum: 170, maximum: 260), spacing: SMI.Spacing.small)
+                    ]
+                    
+                    LazyVGrid(columns: columns, spacing: SMI.Spacing.small) {
                         ForEach(store.recentFileURLs, id: \.self) { url in
-                            RecentFileChip(url: url) {
+                            RecentFileChip(url: url, store: store) {
                                 store.openURL(url)
                             }
                         }
                     }
                     .frame(maxWidth: 600)
                     
-                    // Clear Recents button
                     Button(role: .destructive) {
                         store.clearRecentFiles()
                     } label: {
                         Label("Clear Recents", systemImage: "trash")
-                            .font(.system(size: 12))
+                            .font(SMI.Typo.caption)
                     }
                     .buttonStyle(.plain)
                     .foregroundStyle(.secondary)
                 }
-                .padding(.top, 4)
+                .padding(.top, SMI.Spacing.tight)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(SMI.Spacing.huge)
         .onHover { hovered = $0 }
         .contentShape(Rectangle())
         .onTapGesture { store.openFilePicker() }
+        // PHASE 11. `onTapGesture` on a bare view is invisible to VoiceOver and
+        // unreachable from the keyboard — clicking anywhere in the empty state
+        // opens the picker, and there was no way to discover or trigger that
+        // without a pointer. The explicit action exposes the same behaviour in
+        // the rotor. The Open File… button above remains the obvious route;
+        // this just stops the larger target being a pointer-only secret.
+        .accessibilityAction(named: "Open a file") {
+            store.openFilePicker()
+        }
     }
 }
 
@@ -314,7 +242,12 @@ struct EmptyStateView: View {
 
 struct RecentFileChip: View {
     let url: URL
+    /// Passed in rather than read from the environment: `contextMenu` builds
+    /// its content in a detached presentation context, and an environment
+    /// object does not reliably survive the trip.
+    let store: MediaStore
     let action: () -> Void
+    
     @State private var hovered = false
     
     private var fileIcon: String {
@@ -323,41 +256,88 @@ struct RecentFileChip: View {
         case "mp4", "mov", "mkv", "avi", "m4v", "wmv", "webm": return "film"
         case "mp3", "aac", "flac", "wav", "m4a", "ogg":        return "waveform"
         case "jpg", "jpeg", "png", "gif", "tiff", "heic":      return "photo"
-        default:                                                 return "doc"
+        default:                                               return "doc"
         }
+    }
+    
+    /// Recents can point at files that have since moved or been deleted.
+    /// Marking them rather than hiding them keeps the list stable — a file on
+    /// an unmounted drive shouldn't silently vanish from history.
+    private var isReachable: Bool {
+        FileManager.default.fileExists(atPath: url.path(percentEncoded: false))
     }
     
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 8) {
-                Image(systemName: fileIcon)
+            HStack(spacing: SMI.Spacing.small) {
+                Image(systemName: isReachable ? fileIcon : "questionmark.circle")
                     .font(.system(size: 13))
-                    .foregroundStyle(Color.brandViolet.opacity(0.8))
+                    .foregroundStyle(
+                        isReachable
+                        ? Color.brandViolet.opacity(0.8)
+                        : Color.secondary.opacity(0.5)
+                    )
                     .frame(width: 18)
+                
                 Text(url.lastPathComponent)
-                    .font(.system(size: 12))
+                    .font(SMI.Typo.callout)
                     .lineLimit(1)
                     .truncationMode(.middle)
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(isReachable ? .primary : .secondary)
+                
                 Spacer(minLength: 0)
             }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 7)
+            .padding(.horizontal, SMI.Spacing.medium - 2)
+            .padding(.vertical, SMI.Spacing.snug + 1)
             .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(hovered
-                          ? Color.brandViolet.opacity(0.12)
-                          : Color.primary.opacity(0.05))
+                RoundedRectangle(cornerRadius: SMI.Radius.control, style: .continuous)
+                    .fill(
+                        hovered
+                        ? Color.brandViolet.opacity(0.12)
+                        : Color.primary.opacity(0.05)
+                    )
                     .overlay(
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .strokeBorder(Color.brandViolet.opacity(hovered ? 0.3 : 0.1),
-                                          lineWidth: 0.7)
+                        RoundedRectangle(cornerRadius: SMI.Radius.control, style: .continuous)
+                            .strokeBorder(
+                                Color.brandViolet.opacity(hovered ? 0.30 : 0.10),
+                                lineWidth: 0.7
+                            )
                     )
             )
-            .animation(.easeInOut(duration: 0.15), value: hovered)
+            .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(GlassPressStyle(scale: 0.98))
         .onHover { hovered = $0 }
-        .help(url.path)
+        .smiAnimation(SMI.Motion.fade, value: hovered)
+        .help(isReachable ? url.lastPathComponent : "\(url.lastPathComponent) — not currently available")
+        // PHASE 11. A missing file is currently marked by a question-mark glyph
+        // and grey text, and neither of those is audible. The state goes into
+        // the spoken value instead, so the chip says why it will not open.
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(url.lastPathComponent)
+        .accessibilityValue(isReachable ? "" : "Not currently available")
+        .accessibilityHint(isReachable ? "Opens this file" : "This file has moved or been deleted")
+        .accessibilityAddTraits(.isButton)
+        // Phase 8b. Rename and Move to Trash are deliberately absent: a chip
+        // points at a file that is usually *not* the one on screen, and a
+        // destructive action two rows below "Open" in a list of history is a
+        // mis-click waiting to happen. Removing the entry is offered instead,
+        // which affects the list and not the disk.
+        .contextMenu {
+            FileActionsMenuItems(
+                store: store,
+                url: url,
+                isCompare: false,
+                excluding: [.rename, .trash]
+            )
+            
+            Divider()
+            
+            Button(role: .destructive) {
+                store.removeFromRecents(url)
+            } label: {
+                Label("Remove from Recents", systemImage: "xmark.circle")
+            }
+        }
     }
 }

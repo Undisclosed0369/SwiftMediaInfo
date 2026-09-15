@@ -5,6 +5,10 @@
 //  Upload mediainfo results to pb.plz.ac (text) or up.sb (ZIP)
 //  and display the resulting URL with copy support.
 //
+//  PHASE 5 — a review step now sits between choosing a format and uploading.
+//  It lists exactly what sanitisation removed, so the user can see the privacy
+//  protection working rather than being asked to take it on faith.
+//
 
 import SwiftUI
 
@@ -55,22 +59,21 @@ struct ShareButton: View {
     @State private var showPopover = false
     
     var body: some View {
-        Button(action: {
+        // PHASE 11 — moved onto ToolbarActionButton so it hovers and compresses
+        // like everything else in its cluster. No success state: sharing opens
+        // a popover and then a link, both of which confirm themselves.
+        ToolbarActionButton(
+            icon: "link.badge.plus",
+            label: "Share",
+            accentColor: .brandGreen,
+            isActive: showPopover,
+            isDisabled: store.currentFile == nil,
+            help: "Upload & share online",
+            voiceOverLabel: "Share report",
+            voiceOverHint: "Uploads the report and gives you a link"
+        ) {
             showPopover = true
-        }) {
-            VStack(spacing: 3) {
-                Image(systemName: "link.badge.plus")
-                    .font(.system(size: 21))
-                Text("Share")
-                    .font(.system(size: 12, weight: .medium))
-            }
-            .frame(minWidth: 62, minHeight: 47)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 7)
         }
-        .buttonStyle(.plain)
-        .disabled(store.currentFile == nil)
-        .help("Upload & share online")
         .popover(isPresented: $showPopover, arrowEdge: .bottom) {
             if store.isCompareMode {
                 CompareSharePopover(isPresented: $showPopover)
@@ -214,19 +217,199 @@ struct ShareResultView: View {
     @State private var copied = false
     
     var body: some View {
-        VStack(spacing: 16) {
-            // Header
-            if store.isUploading {
-                uploadingState
-            } else if let error = store.shareError {
+        VStack(spacing: SMI.Spacing.large) {
+            if let error = store.shareError {
                 errorState(error)
             } else if let url = store.shareResultURL {
                 successState(url)
+            } else if store.isUploading {
+                uploadingState
+            } else if store.isPreparingShare {
+                preparingState
+            } else if let pending = store.pendingShare {
+                reviewState(pending)
             }
         }
-        .padding(24)
-        .frame(minWidth: 400)
+        .padding(SMI.Spacing.xxLarge)
+        .frame(minWidth: 440)
         .background(.ultraThinMaterial)
+        .smiAnimation(SMI.Motion.smooth, value: store.pendingShare)
+        .smiAnimation(SMI.Motion.smooth, value: store.isUploading)
+    }
+    
+    // MARK: - Preparing
+    
+    private var preparingState: some View {
+        VStack(spacing: SMI.Spacing.medium + 2) {
+            ZStack {
+                Circle()
+                    .fill(Color.brandViolet.opacity(0.12))
+                    .frame(width: 64, height: 64)
+                ProgressView()
+                    .tint(.brandViolet)
+                    .scaleEffect(1.2)
+            }
+            Text("Preparing…")
+                .font(.title3.weight(.semibold))
+            Text("Gathering the report and removing local paths")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+    }
+    
+    // MARK: - Review
+    //
+    // Nothing has left the machine at this point. This screen is the last stop
+    // before it does, and it exists to make the redactions visible.
+    
+    private func reviewState(_ pending: PendingShare) -> some View {
+        VStack(spacing: SMI.Spacing.large) {
+            
+            ZStack {
+                Circle()
+                    .fill(Color.brandGreen.opacity(0.12))
+                    .frame(width: 64, height: 64)
+                Image(systemName: "hand.raised.fill")
+                    .font(.system(size: 26))
+                    .foregroundStyle(Color.brandGreen)
+            }
+            
+            VStack(spacing: SMI.Spacing.tight) {
+                Text("Ready to Upload")
+                    .font(.title3.weight(.semibold))
+                
+                Text("\(pending.format.label) · \(pending.fileName)")
+                    .font(SMI.Typo.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .frame(maxWidth: 380)
+            }
+            
+            if PrivacyPreference.share == .ask {
+                // PHASE 12c FIX — same shape as the three bindings in
+                // SettingsView. A segmented Picker calls its setter *during*
+                // SwiftUI's update pass; `setPendingShareRemovesPaths` then
+                // mutates a @Published value on the store, which announces a
+                // change to a SwiftUI that has not finished applying the last
+                // one.
+                //
+                // Deferred by one turn of the run loop so the current update
+                // completes first. `MainActor.assumeIsolated` asserts what
+                // `RunLoop.main` already guarantees — that this body runs on
+                // the main thread — so the compiler can verify the call rather
+                // than warning about it.
+                Picker("", selection: Binding(
+                    get: { pending.removePaths },
+                    set: { newValue in
+                        RunLoop.main.perform {
+                            MainActor.assumeIsolated {
+                                store.setPendingShareRemovesPaths(newValue)
+                            }
+                        }
+                    }
+                )) {
+                    Text("Remove paths").tag(true)
+                    Text("Include paths").tag(false)
+                }
+                .labelsHidden()
+                .pickerStyle(.segmented)
+                .frame(width: 260)
+            }
+            
+            if !pending.removePaths {
+                HStack(spacing: SMI.Spacing.snug) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(SMI.Palette.warning)
+                    Text("This upload will include your full file path.")
+                        .font(SMI.Typo.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(SMI.Spacing.medium)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: SMI.Radius.control, style: .continuous)
+                        .fill(SMI.Palette.warning.opacity(0.10))
+                )
+            } else if pending.report.isEmpty {
+                HStack(spacing: SMI.Spacing.snug) {
+                    Image(systemName: "checkmark.seal")
+                        .foregroundStyle(Color.brandGreen)
+                    Text("No local path information was found in this report.")
+                        .font(SMI.Typo.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(SMI.Spacing.medium)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: SMI.Radius.control, style: .continuous)
+                        .fill(Color.brandGreen.opacity(0.08))
+                )
+            } else {
+                VStack(alignment: .leading, spacing: SMI.Spacing.small) {
+                    GlassSectionHeader(
+                        title: "Removed before upload",
+                        icon: "eye.slash",
+                        tint: .brandGreen
+                    )
+                    
+                    ForEach(pending.report.removals) { removal in
+                        HStack(alignment: .firstTextBaseline, spacing: SMI.Spacing.small) {
+                            Image(systemName: "minus.circle.fill")
+                                .font(.system(size: 11))
+                                .foregroundStyle(Color.brandGreen)
+                            
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text(removal.label)
+                                    .font(SMI.Typo.callout)
+                                Text(removal.replacement)
+                                    .font(SMI.Typo.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            
+                            Spacer(minLength: SMI.Spacing.small)
+                            
+                            GlassBadge(
+                                text: "\(removal.occurrences)×",
+                                tint: .brandGreen,
+                                filled: false
+                            )
+                        }
+                    }
+                }
+                .padding(SMI.Spacing.medium)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: SMI.Radius.control, style: .continuous)
+                        .fill(Color.brandGreen.opacity(0.07))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: SMI.Radius.control, style: .continuous)
+                                .strokeBorder(Color.brandGreen.opacity(0.22), lineWidth: 0.7)
+                        )
+                )
+            }
+            
+            Text("The upload will be publicly accessible to anyone with the link.")
+                .font(SMI.Typo.caption)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            
+            HStack(spacing: SMI.Spacing.medium) {
+                Button("Cancel") {
+                    store.cancelPendingShare()
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+                
+                Button("Upload") {
+                    store.confirmShareUpload()
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.brandViolet)
+                .controlSize(.large)
+                .keyboardShortcut(.defaultAction)
+            }
+        }
     }
     
     // MARK: - States
@@ -306,12 +489,19 @@ struct ShareResultView: View {
                 }
                 .buttonStyle(.plain)
                 .help("Click to open in browser")
+                .accessibilityLabel("Share link")
+                .accessibilityValue(url)
+                .accessibilityHint("Opens the link in your browser")
+                .accessibilityAddTraits([.isButton, .isLink])
                 
                 // Copy button
                 Button(action: {
                     NSPasteboard.general.clearContents()
                     NSPasteboard.general.setString(url, forType: .string)
                     copied = true
+                    // PHASE 11 — the green tick is invisible to a screen
+                    // reader, and the clipboard is invisible to everyone.
+                    SMI.A11y.announce("Link copied to clipboard")
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         copied = false
                     }
@@ -336,6 +526,10 @@ struct ShareResultView: View {
                 }
                 .buttonStyle(.plain)
                 .animation(.easeInOut(duration: 0.2), value: copied)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Copy link")
+                .accessibilityValue(copied ? "Copied" : "")
+                .accessibilityAddTraits(.isButton)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
