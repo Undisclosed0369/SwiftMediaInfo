@@ -26,6 +26,8 @@ name: Notify site
 # failure is allowed to be quiet.
 
 on:
+  workflow_dispatch:
+
   release:
     types: [published, edited, deleted]
 
