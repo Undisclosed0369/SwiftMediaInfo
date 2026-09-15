@@ -414,7 +414,7 @@ macOS will refuse to open it the first time. That is expected — see the next s
 
 ```bash
 git clone https://github.com/Undisclosed0369/SwiftMediaInfo.git
-cd SwiftMediaInfo
+cd SwiftMediaInfo/SwiftMediaInfo
 open SwiftMediaInfo.xcodeproj
 ```
 
