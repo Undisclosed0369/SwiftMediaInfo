@@ -308,7 +308,7 @@ Every action reachable from the keyboard, with a reference window at `⌘K`.
 ## Screenshots
 
 <p align="center">
-  <img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S2-CompareDifference.png" width="700" alt="Compare View">
+  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S2-CompareDifference.png" width="700" alt="Compare View">
   <br><em>Compare Mode, with differences highlighted and a summary of what changed</em>
 </p>
 
