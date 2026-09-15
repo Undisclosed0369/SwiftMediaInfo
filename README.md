@@ -397,12 +397,14 @@ And if you do not have Homebrew:
 ### Homebrew
 
 ```bash
+brew trust undisclosed0369/swiftmediainfo
 brew tap undisclosed0369/swiftmediainfo
-brew trust undisclosed0369/swiftmediainfo/swiftmediainfo
-brew install --cask --no-quarantine swiftmediainfo
+brew install --cask swiftmediainfo
 ```
 
-Three commands rather than two, because Homebrew will not install from a third-party tap it has not been told to trust. The second command is you telling it. The third skips the quarantine flag, which is what would otherwise produce the warning described below.
+Three commands, and the order matters. Since Homebrew 6.0 a tap that is not one of the official ones has to be trusted before Homebrew will read anything inside it — tapping first leaves you with a clone it refuses to look at. The first command is you saying yes to this one.
+
+MediaInfo is declared as a dependency, so Homebrew installs it for you if you do not already have it.
 
 ### Disk image
 
@@ -436,7 +438,7 @@ xattr -dr com.apple.quarantine /Applications/SwiftMediaInfo.app
 
 Then open it normally.
 
-Installing with `--no-quarantine` through Homebrew avoids this entirely, because the flag is never set in the first place.
+Installing through Homebrew avoids this: the cask runs that same command for you once the app is in place, and prints a note saying it did. Homebrew used to offer a `--no-quarantine` flag for the job; it was removed in 4.7, which is why the work moved into the cask.
 
 **Worth saying plainly:** that command tells macOS to stop checking a file, and you should not run it on anything you do not have a reason to trust. The reason to trust this one is that the source is public — read it, or build it yourself and skip the question. The [download page](https://undisclosed0369.app/swiftmediainfo/download.html) explains what the warning actually means in more detail.
 
