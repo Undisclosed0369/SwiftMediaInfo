@@ -1,0 +1,11 @@
+# The Sponsor button at the top of the repository.
+#
+# GitHub supports a list of known platforms here — GitHub Sponsors,
+# Patreon, Ko-fi and so on. None of them apply: every one wants bank
+# details, which is the whole reason this project does not take money.
+#
+# `custom` takes plain URLs instead, so the button points at the donate
+# page, where the answer is a wishlist and an explanation of why there is
+# nothing else.
+
+custom: ["https://undisclosed0369.app/swiftmediainfo/donate.html"]
