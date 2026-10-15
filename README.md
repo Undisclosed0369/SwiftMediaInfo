@@ -19,11 +19,12 @@
   <a href="https://undisclosed0369.app/swiftmediainfo/download.html"><strong>Download</strong></a> ·
   <a href="https://undisclosed0369.app/swiftmediainfo/features.html"><strong>Features</strong></a> ·
   <a href="https://undisclosed0369.app/swiftmediainfo/faq.html"><strong>FAQ</strong></a> ·
+  <a href="https://undisclosed0369.app/swiftmediainfo/online.html"><strong>Online</strong></a> ·
   <a href="https://undisclosed0369.app/swiftmediainfo/changelog.html"><strong>Changelog</strong></a>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S1-EasyView.png" width="820" alt="SwiftMediaInfo">
+  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S1-EasyView.png" width="820" alt="SwiftMediaInfo showing the metadata of a video file on macOS">
 </p>
 
 <p align="center">
@@ -308,37 +309,37 @@ Every action reachable from the keyboard, with a reference window at `⌘K`.
 ## Screenshots
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S2-CompareDifference.png" width="700" alt="Compare View">
+  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S2-CompareDifference.png" width="700" alt="SwiftMediaInfo comparing two video files side by side, with the differences highlighted">
   <br><em>Compare Mode, with differences highlighted and a summary of what changed</em>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S3-FieldExplanations.png" width="700" alt="Field explanations">
+  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S3-FieldExplanations.png" width="700" alt="Plain-language explanation of a MediaInfo field in SwiftMediaInfo">
   <br><em>Around seventy fields explained in plain language</em>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S4-Settings.png" width="700" alt="Settings">
+  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S4-Settings.png" width="700" alt="SwiftMediaInfo settings on macOS">
   <br><em>Six panes of settings, and an interface that scales as a whole</em>
 </p>
 
 <p align="center">
-  <img src="https://github.com/Undisclosed0369/SwiftMediaInfo/blob/main/assets/S5-ShareOnline.png" width="700" alt="Share online">
+  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S5-ShareOnline.png" width="700" alt="Sharing a MediaInfo report online from SwiftMediaInfo">
   <br><em>Share a report online — reviewed in full, with paths strippable, before anything is uploaded</em>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S6-HTMLView.png" width="700" alt="HTML View">
+  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S6-HTMLView.png" width="700" alt="MediaInfo HTML report rendered in SwiftMediaInfo">
   <br><em>HTML View, rendered with WebKit</em>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S7-Search.png" width="700" alt="Search">
+  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S7-Search.png" width="700" alt="Searching every metadata field in SwiftMediaInfo">
   <br><em>Fuzzy search across every field</em>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S8-LightCustomBG.png" width="700" alt="Light appearance">
+  <img src="https://raw.githubusercontent.com/Undisclosed0369/SwiftMediaInfo/main/assets/S8-LightCustomBG.png" width="700" alt="SwiftMediaInfo in light appearance with a custom background">
   <br><em>Light appearance, with a custom background</em>
 </p>
 
@@ -599,6 +600,12 @@ No. It is read-only. It does not edit, re-encode, rename or touch your media in 
 
 Anything MediaInfo supports, which is most things — MKV, MP4, MOV, AVI, FLAC, MP3, WAV and several hundred others.
 
+For each one it shows what MediaInfo reads: codec and profile, bitrate, resolution, frame rate, HDR format, colour information, audio channels and sample rate, languages, subtitles, chapters, and the encoder settings when the file records them.
+
+### Can I try it without installing anything?
+
+Yes. [SwiftMediaInfo Online](https://undisclosed0369.app/swiftmediainfo/online.html) runs MediaInfo in your browser, on any computer, Mac or not. The file is read on your own machine and never uploaded. It has the Text, HTML, XML and JSON views; comparison, explanations and checksums are in the app.
+
 ### Is this an official MediaInfo application?
 
 No. It is an independent front-end, built for macOS, using MediaInfo's own binary underneath. MediaArea made the hard part; this is the window onto it.
@@ -613,7 +620,7 @@ Yes, MIT licensed. All of it, including the website.
 
 ### Why is there an easter egg?
 
-Because software should be fun occasionally. It is under two kilobytes.
+Because software should be fun occasionally.
 
 ### I found a bug, or I have a suggestion
 
